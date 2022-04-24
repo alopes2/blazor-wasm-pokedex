@@ -1,0 +1,62 @@
+@using Pokedex.Models;
+@using Pokedex.Clients;
+@using MatBlazor;
+@using Pokedex.Shared.Components;
+
+@page "/pokemon/{Identificator}"
+
+@inject NavigationManager NavigationManager;
+@inject PokeClient PokeClient;
+
+<div class="container">
+  @if (isLoading)
+  {
+    <p>Loading...</p>
+  }
+  else
+  {
+    @if (pokemon is null)
+    {
+      <p>No Pokemon was found with this name or id: @Identificator</p>
+    }
+    else
+    {
+      <img src="@pokemon.Sprites.Default" />
+      <p>@pokemon?.Name</p>
+      <PokemonTypes Types=@pokemon.Types></PokemonTypes>
+
+      <table class="stats">
+        <tbody>
+          <tr>
+            <td>Base Experience</td>
+            <td>@pokemon.BaseExperience</td>
+          </tr>
+          <tr>
+            <td>Height</td>
+            <td>@pokemon.Height</td>
+          </tr>
+          <tr>
+            <td>Weight</td>
+            <td>@pokemon.Weight</td>
+          </tr>
+        </tbody>
+      </table>
+    }
+  }
+</div>
+
+@code {
+
+  [Parameter]
+  public string Identificator { get; set; }
+
+  private bool isLoading = true;
+
+  public Pokemon pokemon;
+
+  protected override async Task OnInitializedAsync()
+  {
+    pokemon = await PokeClient.GetPokemonByNameOrId(Identificator);
+    isLoading = false;
+  }
+}

@@ -1,0 +1,24 @@
+.pokemon-card {
+  border: 1px solid black;
+  border-radius: 5px;
+  padding: 10px;
+  margin: 15px;
+  width: 200px;
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-transform: capitalize;
+  cursor: pointer;
+  color: black;
+}
+
+a, p {
+  text-decoration: none;
+}
+
+.pokemon-card img {
+  height: 96px;
+  width: 96px;
+}

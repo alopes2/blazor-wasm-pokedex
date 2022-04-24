@@ -1,0 +1,38 @@
+﻿@using Pokedex.Clients;
+@using Pokedex.Models;
+@inject PokeClient PokeClient
+
+
+<a href="@pokemonLink">
+  <div class="pokemon-card">
+    @if (isLoading)
+    {
+      <p> Loading...</p>
+    }
+    else
+    {
+      <img src="@pokemon.Sprites.Default">
+      <p>@pokemon.Name</p>
+      <PokemonTypes Types="@pokemon.Types"></PokemonTypes>
+    }
+  </div>
+</a>
+
+@code {
+
+  [Parameter]
+  public string Url { get; set; }
+
+  private Pokemon pokemon;
+
+  private bool isLoading = true;
+
+  private string pokemonLink = "";
+
+  protected override async Task OnInitializedAsync()
+  {
+    pokemon = await PokeClient.GetPokemon(Url);
+    isLoading = false;
+    pokemonLink = "/pokemon/" + pokemon.Id;
+  }
+}

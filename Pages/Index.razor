@@ -1,0 +1,60 @@
+﻿@using Pokedex.Clients;
+@using Pokedex.Models;
+@using System.Collections.ObjectModel;
+@using MatBlazor;
+@using Pokedex.Shared.Components;
+
+@page "/"
+@inject PokeClient PokeClient
+@inject NavigationManager NavigationManager
+
+<PageTitle>Pokedex</PageTitle>
+
+<form @onsubmit="SearchPokemon">
+  <input placeholder="Search pokemon..." @bind-value="@search" />
+  <button type="submit">Search</button>
+</form>
+
+<div class="pokemon-cards">
+  @foreach (var item in pokemons)
+  {
+    <PokemonCard Url="@item.Url"></PokemonCard>
+  }
+</div>
+
+@if (hasNext)
+{
+  <MatButton class="load-more" Raised="true" @onclick="LoadPokemons">
+    Load more
+  </MatButton>
+}
+
+@code {
+
+  private List<NamedModel> pokemons = new List<NamedModel>();
+  private bool hasNext;
+
+  private string search;
+
+  protected override async Task OnInitializedAsync()
+  {
+    await LoadPokemons();
+  }
+
+  private async Task LoadPokemons()
+  {
+    var result = await PokeClient.GetPokemons(offset: pokemons.Count);
+
+    hasNext = result?.NextPage is not null;
+
+    pokemons.AddRange(result.Pokemons);
+  }
+
+  private async Task SearchPokemon()
+  {
+    if (!string.IsNullOrWhiteSpace(search))
+    {
+      NavigationManager.NavigateTo($"/pokemon/{search}");
+    };
+  }
+}
