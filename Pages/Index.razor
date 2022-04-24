@@ -1,10 +1,10 @@
 ﻿@using Pokedex.Clients;
 @using Pokedex.Models;
-@using System.Collections.ObjectModel;
 @using MatBlazor;
 @using Pokedex.Shared.Components;
 
 @page "/"
+
 @inject PokeClient PokeClient
 @inject NavigationManager NavigationManager
 
@@ -24,7 +24,7 @@
 
 @if (hasNext)
 {
-  <MatButton class="load-more" Raised="true" @onclick="LoadPokemons">
+  <MatButton Raised="true" @onclick="LoadPokemons">
     Load more
   </MatButton>
 }

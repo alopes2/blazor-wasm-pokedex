@@ -1,11 +1,9 @@
 @using Pokedex.Models;
 @using Pokedex.Clients;
-@using MatBlazor;
 @using Pokedex.Shared.Components;
 
 @page "/pokemon/{Identificator}"
 
-@inject NavigationManager NavigationManager;
 @inject PokeClient PokeClient;
 
 <div class="container">
@@ -46,7 +44,6 @@
 </div>
 
 @code {
-
   [Parameter]
   public string Identificator { get; set; }
 

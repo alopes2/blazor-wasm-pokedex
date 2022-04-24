@@ -2,7 +2,6 @@
 @using Pokedex.Models;
 @inject PokeClient PokeClient
 
-
 <a href="@pokemonLink">
   <div class="pokemon-card">
     @if (isLoading)
@@ -19,7 +18,6 @@
 </a>
 
 @code {
-
   [Parameter]
   public string Url { get; set; }
 

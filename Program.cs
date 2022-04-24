@@ -14,7 +14,9 @@ builder.Services.AddMatBlazor();
 
 builder.Services.AddScoped(sp => new HttpClient { BaseAddress = new Uri(builder.HostEnvironment.BaseAddress) });
 
-var pokeApiOptions = builder.Configuration.GetSection(PokeApiOptions.Name).Get<PokeApiOptions>();
+var pokeApiOptions = builder.Configuration
+                        .GetSection(PokeApiOptions.Name)
+                        .Get<PokeApiOptions>();
 
 builder.Services.AddHttpClient<PokeClient>(options =>
 {
